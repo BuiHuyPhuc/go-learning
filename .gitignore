@@ -1,32 +1,51 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
+# Binary cho chương trình và plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+bin/
+dist/
 
-# Test binary, built with `go test -c`
+# Test binary (sinh ra khi dùng `go test -c`)
 *.test
 
-# Code coverage profiles and other test artifacts
+# Kết quả đo độ bao phủ code (Coverage)
 *.out
-coverage.*
 *.coverprofile
+coverage.txt
 profile.cov
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependency directories
+# Thông thường không nên commit vendor/ trừ khi dự án yêu cầu đặc biệt
+vendor/
 
 # Go workspace file
 go.work
 go.work.sum
 
-# env file
+# Các file biến môi trường (Chứa thông tin nhạy cảm)
 .env
+*.env
+.env.local
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# Các thư mục tạm và log
+tmp/
+temp/
+logs/
+*.log
+
+# Cấu hình của VS Code (Nên ignore để mỗi người dùng cấu hình riêng)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Cấu hình của JetBrains (GoLand)
+.idea/
+
+# File rác hệ điều hành
+.DS_Store
+Thumbs.db
