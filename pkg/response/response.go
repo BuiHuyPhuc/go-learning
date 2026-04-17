@@ -23,6 +23,6 @@ func SuccessResponse(c *gin.Context, code int, data interface{}) {
 func ErrorResponse(c *gin.Context, code int, message string) {
 	c.JSON(http.StatusInternalServerError, Response{
 		InternalCode: code,
-		Message:      message,
+		Message:      msg[code],
 	})
 }
