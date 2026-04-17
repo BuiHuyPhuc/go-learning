@@ -1,0 +1,6 @@
+{"level":"INFO","time":"2026-04-17T16:39:56.696+0700","caller":"cli/main.log.go:33","msg":"Info log","line":1}
+{"level":"WARN","time":"2026-04-17T16:39:56.696+0700","caller":"cli/main.log.go:34","msg":"Warn log","line":2}
+{"level":"ERROR","time":"2026-04-17T16:39:56.696+0700","caller":"cli/main.log.go:35","msg":"Error log","line":3}
+{"level":"INFO","time":"2026-04-17T16:40:26.420+0700","caller":"cli/main.log.go:33","msg":"Info log","line":1}
+{"level":"WARN","time":"2026-04-17T16:40:26.420+0700","caller":"cli/main.log.go:34","msg":"Warn log","line":2}
+{"level":"ERROR","time":"2026-04-17T16:40:26.420+0700","caller":"cli/main.log.go:35","msg":"Error log","line":3}

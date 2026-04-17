@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,6 +15,7 @@ func NewPongController() *PongController {
 }
 
 func (pc *PongController) Pong(c *gin.Context) {
+	fmt.Println("PongController.Pong")
 	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})
