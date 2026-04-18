@@ -1,26 +1,19 @@
 server:
   port: 8888
-database:
-  - user: admin
-    password: admin
-    host: localhost
-    name: shopDEV
-  - user: order
-    password: order
-    host: localhost
-    name: orderDEV
-security:
-  jwt:
-    key: abc123
-redis:
-  host: localhost
-  port: 6379
-elasticsearch:
-  host: localhost
-  port: 9200
-rabbitmq:
-  host: localhost
-  port: 5672
-kafka:
-  host: localhost
-  port: 9092
+mysql:
+  host: 127.0.0.1
+  port: 33306
+  username: root
+  password: root123
+  dbname: shopdevgo
+  maxIdleConns: 10      #  conn pool tối đa
+  maxOpenConns: 100     #  conn tối đa của máy chủ vật lý
+  connMaxIdleTime: 300  #  thời gian tối đa rảnh của 1 conn
+  connMaxLifetime: 300  #  vòng đời tối đa của 1 conn
+logger:
+  level: debug
+  path: ./storages/logs/dev.001.log
+  maxSize: 500  # megabytes
+  maxBackups: 3
+  maxAge: 28
+  compress: true # disabled by default
