@@ -37,5 +37,8 @@ func benchmarkDB(b *testing.B, conns int) {
 
 // go test -bench=. -benchmem -run=^$
 
-func BenchmarkDBConn1(b *testing.B)  { benchmarkDB(b, 1) }
+// 1503            690222 ns/op             582 B/op         16 allocs/op
+// func BenchmarkDBConn1(b *testing.B) { benchmarkDB(b, 1) }
+
+// 4845            220195 ns/op             437 B/op         13 allocs/op
 func BenchmarkDBConn10(b *testing.B) { benchmarkDB(b, 10) }

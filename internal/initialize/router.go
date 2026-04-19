@@ -1,44 +1,44 @@
 package initialize
 
 import (
-	"fmt"
-	c "go-learning/internal/controller"
-	"go-learning/internal/middlewares"
+	"go-learning/global"
+	"go-learning/internal/routers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func AA() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("Before -> AA")
-		c.Next()
-		fmt.Println("After -> AA")
-	}
-}
-
-func BB() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("Before -> BB")
-		c.Next()
-		fmt.Println("After -> BB")
-	}
-}
-
-func CC(c *gin.Context) {
-	fmt.Println("Before -> CC")
-	c.Next()
-	fmt.Println("After -> CC")
-}
-
 func InitRouter() *gin.Engine {
 	// TODO: Init router from file or env
-	r := gin.Default()
+	var r *gin.Engine
 
-	r.Use(middlewares.AuthMiddleware(), AA(), BB(), CC)
+	if global.Config.Server.Mode == "dev" {
+		gin.SetMode(gin.DebugMode)
+		gin.ForceConsoleColor()
+		r = gin.Default()
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+		r = gin.New() // Không ghi nhật ký
+	}
 
-	v1 := r.Group("/api/v1")
-	v1.GET("/ping", c.NewPongController().Pong)
-	v1.GET("/users/1", c.NewUserController().GetUserById)
+	// middlewares
+	// r.Use() // logging middleware
+	// r.Use() // cross-domain middleware
+	// r.Use() // limiter middleware
+	manageRouter := routers.RouterGroupApp.Manage
+	userRouter := routers.RouterGroupApp.User
+
+	MainGroup := r.Group("/api/v1")
+	{
+		MainGroup.GET("/check-status") // tracking monitor
+	}
+	{
+		manageRouter.InitAdminRouter(MainGroup)
+		manageRouter.InitUserRouter(MainGroup)
+	}
+	{
+		userRouter.InitUserRouter(MainGroup)
+		userRouter.InitProductRouter(MainGroup)
+	}
 
 	return r
 }

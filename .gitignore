@@ -49,3 +49,7 @@ logs/
 # File rác hệ điều hành
 .DS_Store
 Thumbs.db
+
+# File build hệ thống dev
+docker-compose.yaml
+

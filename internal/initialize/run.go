@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"go-learning/global"
 	"log"
-
-	"go.uber.org/zap"
 )
 
 func Run() {
@@ -14,8 +12,6 @@ func Run() {
 	fmt.Printf("Loading configuration mysql:\n%+v\n", global.Config.Mysql)
 
 	InitLogger()
-	global.Logger.Info("Logger initialized", zap.String("ok", "success"))
-
 	InitMysql()
 	InitRedis()
 

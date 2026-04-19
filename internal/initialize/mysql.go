@@ -11,6 +11,11 @@ import (
 	"gorm.io/gorm"
 )
 
+// docker exec -it c930a1205c22 bash
+// mysql -uroot -proot123
+// use shopdevgo;
+// show tables;
+
 func checkErrorPanic(err error, errString string) {
 	if err != nil {
 		global.Logger.Error(errString, zap.Error(err))
