@@ -2,7 +2,6 @@ package initialize
 
 import (
 	"go-learning/global"
-	"go-learning/internal/routers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,21 +23,25 @@ func InitRouter() *gin.Engine {
 	// r.Use() // logging middleware
 	// r.Use() // cross-domain middleware
 	// r.Use() // limiter middleware
-	manageRouter := routers.RouterGroupApp.Manage
-	userRouter := routers.RouterGroupApp.User
+	// manageRouter := routers.RouterGroupApp.Manage
+	// userRouter := routers.RouterGroupApp.User
 
 	MainGroup := r.Group("/api/v1")
 	{
-		MainGroup.GET("/check-status") // tracking monitor
+		MainGroup.GET("/check-status", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "healthy",
+			})
+		}) // tracking monitor
 	}
-	{
-		manageRouter.InitAdminRouter(MainGroup)
-		manageRouter.InitUserRouter(MainGroup)
-	}
-	{
-		userRouter.InitUserRouter(MainGroup)
-		userRouter.InitProductRouter(MainGroup)
-	}
+	// {
+	// 	manageRouter.InitAdminRouter(MainGroup)
+	// 	manageRouter.InitUserRouter(MainGroup)
+	// }
+	// {
+	// 	userRouter.InitUserRouter(MainGroup)
+	// 	userRouter.InitProductRouter(MainGroup)
+	// }
 
 	return r
 }
