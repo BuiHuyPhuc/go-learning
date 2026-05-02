@@ -1,15 +1,27 @@
 package user
 
-import "github.com/gin-gonic/gin"
+import (
+	"go-learning/internal/wire"
+
+	"github.com/gin-gonic/gin"
+)
 
 type UserRouter struct {
 }
 
-func (ur *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
+func (urt *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
+	// This is non-dependency
+	// ur := repo.NewUserRepository()
+	// us := service.NewUserService(ur)
+	// userHandlerNonDependency := controller.NewUserController(us)
+
+	// Wire go
+	userController, _ := wire.InitUserRouterHandler()
+
 	// public router
 	userRouterPublic := Router.Group("/users")
 	{
-		userRouterPublic.POST("/register") // register -> YES -> No
+		userRouterPublic.POST("/register", userController.Register) // register -> YES -> No
 		userRouterPublic.POST("/opt")
 	}
 

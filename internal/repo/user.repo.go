@@ -1,12 +1,42 @@
 package repo
 
-type UserRepo struct {
+import (
+	"context"
+	"go-learning/global"
+	"go-learning/internal/database"
+)
+
+// type UserRepo struct {
+// }
+
+// func NewUserRepo() *UserRepo {
+// 	return &UserRepo{}
+// }
+
+// func (ur *UserRepo) GetInfoUser() string {
+//   return "Phúc nè"
+// }
+
+// INTERFACE
+type IUserRepository interface {
+	GetUserByEmail(email string) bool
 }
 
-func NewUserRepo() *UserRepo {
-	return &UserRepo{}
+type userRepository struct {
+	sqlc *database.Queries
 }
 
-func (ur *UserRepo) GetInfoUser() string {
-  return "Phúc nè"
+// GetUserByEmail implements [IUserRepository].
+func (ur *userRepository) GetUserByEmail(email string) bool {
+	user, err := ur.sqlc.GetUserByEmailSQLC(context.Background(), email)
+	if err != nil {
+		return false
+	}
+	return user.UsrID != 0
+}
+
+func NewUserRepository() IUserRepository {
+	return &userRepository{
+		sqlc: database.New(global.Mdbc),
+	}
 }
