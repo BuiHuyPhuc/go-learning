@@ -11,9 +11,11 @@ import (
 )
 
 // cd internal/wire/ -> wire
+
 func InitUserRouterHandler() (*controller.UserController, error) {
 	wire.Build(
 		repo.NewUserRepository,
+		repo.NewUserAuthRepository,
 		service.NewUserService,
 		controller.NewUserController,
 	)

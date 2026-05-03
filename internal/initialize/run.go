@@ -14,7 +14,8 @@ func Run() {
 	InitLogger()
 	// InitMysql()
 	InitMysqlC()
-	// InitRedis()
+	InitRedis()
+	// InitKafka()
 
 	r := InitRouter()
 
