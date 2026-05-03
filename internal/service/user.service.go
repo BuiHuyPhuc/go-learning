@@ -75,6 +75,22 @@ func (us *userService) Register(email, purpose string) int {
 		return response.ErrSendEmailOTP
 	}
 
+	// send OTP via Kafka
+	// body := make(map[string]interface{})
+	// body["otp"] = otp
+	// body["email"] = email
+
+	// jsonBody, _ := json.Marshal(body)
+	// msg := kafka.Message{
+	// 	Key:   []byte("otp-auth"),
+	// 	Value: []byte(jsonBody),
+	// 	Time:  time.Now(),
+	// }
+	// err = global.KafkaProducer.WriteMessages(context.Background(), msg)
+	// if err != nil {
+	// 	return response.ErrSendEmailOTP
+	// }
+
 	return response.ErrCodeSuccess
 }
 
