@@ -1,7 +1,6 @@
 package repo
 
 import (
-	"context"
 	"go-learning/global"
 	"go-learning/internal/database"
 )
@@ -28,7 +27,7 @@ type userRepository struct {
 
 // GetUserByEmail implements [IUserRepository].
 func (ur *userRepository) GetUserByEmail(email string) bool {
-	user, err := ur.sqlc.GetUserByEmailSQLC(context.Background(), email)
+	user, err := ur.sqlc.GetUserByEmailSQLC(ctx, email)
 	if err != nil {
 		return false
 	}

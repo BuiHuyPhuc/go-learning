@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"go-learning/global"
-
-	"go.uber.org/zap"
 )
 
 // docker exec -it c930a1205c22 bash
@@ -13,12 +11,7 @@ import (
 // use shopdevgo;
 // show tables;
 
-func checkErrorPanicC(err error, errString string) {
-	if err != nil {
-		global.Logger.Error(errString, zap.Error(err))
-		panic(err)
-	}
-}
+// sqlc generate
 
 func InitMysqlC() {
 	// TODO: Init mysql from file or env
