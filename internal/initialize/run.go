@@ -17,6 +17,8 @@ func Run() {
 	InitRedis()
 	// InitKafka()
 
+	InitServiceInterface()
+
 	r := InitRouter()
 
 	// Server will listen on 0.0.0.0:8888 (localhost:8888 on Windows)

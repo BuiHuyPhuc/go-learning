@@ -12,6 +12,8 @@ dc_up:
 dc_down:
   docker-compose down
 
+crese:
+  goose -dir=sqlc/schema create shopdevgo sql
 upse:
   @GOOSE_DRIVER=$(GOOSE_DRIVER) GOOSE_DBSTRING=$(GOOSE_DBSTRING) goose -dir $(GOOSE_MIGRATION_DIR) up
   # goose -dir sqlc/schema mysql "root:root123@tcp(127.0.0.1:33306)/shopdevgo" up
