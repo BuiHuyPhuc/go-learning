@@ -3,6 +3,7 @@ package initialize
 import (
 	"fmt"
 	"go-learning/global"
+
 	"log"
 )
 
@@ -14,8 +15,10 @@ func Run() {
 	InitLogger()
 	// InitMysql()
 	InitMysqlC()
-	InitRedis()
+	// InitRedis()
 	// InitKafka()
+
+	// InitCron()
 
 	InitServiceInterface()
 
