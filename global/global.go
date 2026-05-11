@@ -6,6 +6,7 @@ import (
 	"go-learning/pkg/settings"
 
 	"github.com/redis/go-redis/v9"
+	"github.com/robfig/cron/v3"
 	"github.com/segmentio/kafka-go"
 	"gorm.io/gorm"
 )
@@ -17,6 +18,7 @@ var (
 	Mdbc          *sql.DB
 	Rdb           *redis.Client
 	KafkaProducer *kafka.Writer
+	Cron          *cron.Cron
 )
 
 /*
