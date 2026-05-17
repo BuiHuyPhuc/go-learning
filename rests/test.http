@@ -1,2 +1,5 @@
 ###
 GET http://localhost:8888/api/v1/check-status
+
+### context cli
+GET http://localhost:8890/order
