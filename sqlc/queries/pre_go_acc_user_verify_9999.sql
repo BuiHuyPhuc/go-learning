@@ -1,5 +1,6 @@
 -- name: GetValidOTP :one
-SELECT verify_otp, verify_key_hash, verify_key, verify_id FROM `pre_go_acc_user_verify_9999`
+SELECT verify_otp, verify_key_hash, verify_key, verify_id
+FROM `pre_go_acc_user_verify_9999`
 WHERE verify_key_hash = ? AND is_verified = 0;
 
 -- name: UpdateUserVerificationStatus :exec

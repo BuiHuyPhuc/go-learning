@@ -2,7 +2,6 @@ package user
 
 import (
 	"go-learning/internal/controller/account"
-	"go-learning/internal/wire"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,12 +16,13 @@ func (urt *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	// userHandlerNonDependency := controller.NewUserController(us)
 
 	// Wire go
-	userController, _ := wire.InitUserRouterHandler()
+	// userController, _ := wire.InitUserRouterHandler()
 
 	// public router
 	userRouterPublic := Router.Group("/users")
 	{
-		userRouterPublic.POST("/register", userController.Register) // register -> YES -> No
+		// userRouterPublic.POST("/register", userController.Register) // register -> YES -> No
+		userRouterPublic.POST("/register", account.Login.Register)
 		userRouterPublic.POST("/login", account.Login.Login)
 	}
 
