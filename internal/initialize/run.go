@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"go-learning/global"
 
-	"log"
+	"github.com/gin-gonic/gin"
 )
 
-func Run() {
+func Run() *gin.Engine {
 	// load configuration
 	LoadConfig()
 	fmt.Printf("Loading configuration mysql:\n%+v\n", global.Config.Mysql)
@@ -15,17 +15,17 @@ func Run() {
 	InitLogger()
 	// InitMysql()
 	InitMysqlC()
-	// InitRedis()
+	InitRedis()
 	// InitKafka()
 
 	// InitCron()
 
 	InitServiceInterface()
 
-	r := InitRouter()
+	return InitRouter()
 
 	// Server will listen on 0.0.0.0:8888 (localhost:8888 on Windows)
-	if err := r.Run(":8888"); err != nil {
-		log.Fatalf("failed to run server: %v", err)
-	}
+	// if err := r.Run(":8888"); err != nil {
+	// 	log.Fatalf("failed to run server: %v", err)
+	// }
 }

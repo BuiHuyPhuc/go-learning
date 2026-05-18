@@ -1,6 +1,9 @@
 package service
 
-import "context"
+import (
+	"context"
+	"go-learning/internal/dto"
+)
 
 type (
 	//.. interface
@@ -16,7 +19,7 @@ type (
 
 	IUserLogin interface {
 		Login(ctx context.Context) error
-		Register(ctx context.Context) error
+		Register(ctx context.Context, in *dto.RegisterRequest) (statusCode int, err error)
 		VerifyOTP(ctx context.Context) error
 		UpdatePasswordRegister(ctx context.Context) error
 	}

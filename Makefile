@@ -27,6 +27,9 @@ resetse:
 sqlgen:
   sqlc generate
 
+swag:
+  swag init -g ./cmd/server/main.go -o ./cmd/swag/docs
+
 .PHONY: run upse downse resetse dc_up dc_down
 
 .PHONY: air
