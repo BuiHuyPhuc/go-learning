@@ -1,10 +1,9 @@
 package main
 
 import (
+	_ "go-learning/cmd/swag/docs"
 	"go-learning/internal/initialize"
 	"log"
-
-	_ "github.com/BuiHuyPhuc/go-learning/cmd/swag/docs"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
