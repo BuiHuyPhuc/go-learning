@@ -49,6 +49,24 @@ type PreGoAccUserBase9999 struct {
 	UserUpdatedAt  sql.NullTime
 }
 
+// pre_go_acc_user_info_9999
+type PreGoAccUserInfo9999 struct {
+	UserID       int32
+	UserAccount  string
+	UserNickname sql.NullString
+	UserAvatar   sql.NullString
+	// User state: 0-Locked, 1-Activated, 2-Not Activated
+	UserState    uint8
+	UserMobile   sql.NullString
+	UserGender   sql.NullInt16
+	UserBirthday sql.NullTime
+	UserEmail    sql.NullString
+	// Authentication status: 0-Not Authentication, 1-Pending, 2-Authentication
+	UserIsAuthentication uint8
+	CreatedAt            sql.NullTime
+	UpdatedAt            sql.NullTime
+}
+
 // pre_go_acc_user_verify_9999
 type PreGoAccUserVerify9999 struct {
 	VerifyID        int32

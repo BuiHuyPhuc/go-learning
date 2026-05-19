@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Response struct {
+type ResponseData struct {
 	InternalCode int         `json:"internal_code"`
 	Message      string      `json:"message"`
 	Data         interface{} `json:"data"`
@@ -19,7 +19,7 @@ type ErrorResponseData struct {
 }
 
 func SuccessResponse(c *gin.Context, code int, data interface{}) {
-	c.JSON(http.StatusOK, Response{
+	c.JSON(http.StatusOK, ResponseData{
 		InternalCode: code,
 		Message:      msg[code],
 		Data:         data,
@@ -27,8 +27,12 @@ func SuccessResponse(c *gin.Context, code int, data interface{}) {
 }
 
 func ErrorResponse(c *gin.Context, code int, message string) {
-	c.JSON(http.StatusInternalServerError, Response{
+	if message == "" {
+		message = msg[code]
+	}
+	c.JSON(http.StatusInternalServerError, ErrorResponseData{
 		InternalCode: code,
-		Message:      msg[code],
+		Err:          message,
+		Detail:       nil,
 	})
 }

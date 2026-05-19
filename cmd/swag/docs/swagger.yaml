@@ -9,6 +9,20 @@ definitions:
       verify_type:
         type: integer
     type: object
+  dto.UpdatePasswordRegisterRequest:
+    properties:
+      password:
+        type: string
+      token:
+        type: string
+    type: object
+  dto.VerifyOTPRequest:
+    properties:
+      verify_code:
+        type: string
+      verify_key:
+        type: string
+    type: object
   response.ErrorResponseData:
     properties:
       detail: {}
@@ -17,7 +31,7 @@ definitions:
       internal_code:
         type: integer
     type: object
-  response.Response:
+  response.ResponseData:
     properties:
       data: {}
       internal_code:
@@ -57,12 +71,64 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.Response'
+            $ref: '#/definitions/response.ResponseData'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponseData'
       summary: User Registration
+      tags:
+      - account management
+  /users/update-pass-register:
+    post:
+      consumes:
+      - application/json
+      description: When user is registerd send otp  to email
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdatePasswordRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponseData'
+      summary: Update Password Register
+      tags:
+      - account management
+  /users/verify-account:
+    post:
+      consumes:
+      - application/json
+      description: When user is registerd send otp  to email
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.VerifyOTPRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponseData'
+      summary: Verify OTP Login By User
       tags:
       - account management
 schemes:

@@ -20,8 +20,8 @@ type (
 	IUserLogin interface {
 		Login(ctx context.Context) error
 		Register(ctx context.Context, in *dto.RegisterRequest) (statusCode int, err error)
-		VerifyOTP(ctx context.Context) error
-		UpdatePasswordRegister(ctx context.Context) error
+		VerifyOTP(ctx context.Context, in *dto.VerifyOTPRequest) (out dto.VerifyOTPResponse, err error)
+		UpdatePasswordRegister(ctx context.Context, token string, password string) (userId int, err error)
 	}
 )
 
