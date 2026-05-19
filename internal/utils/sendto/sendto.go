@@ -23,12 +23,10 @@ import (
 */
 
 const (
-	SMTPHost = "smtp.gmail.com"
-	SMTPPort = "587"
-	// SMTPUsername = "example@gmail.com"
-	// SMTPPassword = ""
-	SMTPUsername = "buihuyphuc6101997@gmail.com"
-	SMTPPassword = "hkasnjwkqvjtowoa"
+	SMTPHost     = "smtp.gmail.com"
+	SMTPPort     = "587"
+	SMTPUsername = "example@gmail.com"
+	SMTPPassword = ""
 )
 
 type EmailAddress struct {
