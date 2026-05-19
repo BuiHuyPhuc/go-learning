@@ -112,10 +112,93 @@ func (s *sUserLogin) Register(ctx context.Context, in *dto.RegisterRequest) (sta
 	return response.ErrCodeSuccess, nil
 }
 
-func (s *sUserLogin) VerifyOTP(ctx context.Context) error {
-	return nil
+func (s *sUserLogin) VerifyOTP(ctx context.Context, in *dto.VerifyOTPRequest) (out dto.VerifyOTPResponse, err error) {
+	hashKey := crypto.GetHash(strings.ToLower(in.VerifyKey))
+
+	userKey := utils.GetUserKey(hashKey)
+	otpFound, err := global.Rdb.Get(ctx, userKey).Result()
+	if err != nil {
+		return out, err
+	}
+
+	if in.VerifyCode != otpFound {
+		// Nếu như sai 3 lần trong vòng 1 phút?
+		return out, fmt.Errorf("OTP not match")
+	}
+
+	// get OTP
+	infoOTP, err := s.r.GetInfoOTP(ctx, hashKey)
+	if err != nil {
+		return out, err
+	}
+
+	// update status verified
+	err = s.r.UpdateUserVerificationStatus(ctx, hashKey)
+	if err != nil {
+		return out, err
+	}
+
+	out.Token = infoOTP.VerifyKeyHash // token template
+	out.Message = "success"
+
+	return out, nil
 }
 
-func (s *sUserLogin) UpdatePasswordRegister(ctx context.Context) error {
-	return nil
+func (s *sUserLogin) UpdatePasswordRegister(ctx context.Context, token string, password string) (userId int, err error) {
+	// 1. token is already verified
+	infoOTP, err := s.r.GetInfoOTP(ctx, token)
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	// 2. check isVerified OK
+	if infoOTP.IsVerified.Int32 != 1 {
+		return response.ErrCodeUserOtpNotExists, fmt.Errorf("user otp not verified")
+	}
+
+	// 3. check token is exists in user_base
+
+	// 4. add userBase to user_base table
+	userSalt, err := crypto.GenarateSalt(16)
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	newUserBase, err := s.r.AddUserBase(ctx, database.AddUserBaseParams{
+		UserAccount:  infoOTP.VerifyKey,
+		UserSalt:     userSalt,
+		UserPassword: crypto.HashPassword(password, userSalt),
+	})
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	newUserId, err := newUserBase.LastInsertId()
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	// 5. add newUserId to user_info table
+	newUserInfo, err := s.r.AddUserHaveUserId(ctx, database.AddUserHaveUserIdParams{
+		UserID:               int32(newUserId),
+		UserAccount:          infoOTP.VerifyKey,
+		UserNickname:         sql.NullString{String: infoOTP.VerifyKey, Valid: true},
+		UserAvatar:           sql.NullString{String: "", Valid: true},
+		UserState:            1,
+		UserMobile:           sql.NullString{String: "", Valid: true},
+		UserGender:           sql.NullInt16{Int16: 0, Valid: true},
+		UserBirthday:         sql.NullTime{Time: time.Time{}, Valid: false},
+		UserEmail:            sql.NullString{String: infoOTP.VerifyKey, Valid: true},
+		UserIsAuthentication: 1,
+	})
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	newUserId, err = newUserInfo.LastInsertId()
+	if err != nil {
+		return response.ErrCodeUserOtpNotExists, err
+	}
+
+	return int(newUserId), nil
 }
