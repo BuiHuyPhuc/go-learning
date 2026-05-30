@@ -5,6 +5,7 @@ type Config struct {
 	Logger LoggerSetting `mapstructure:"logger"`
 	Mysql  MySQLSetting  `mapstructure:"mysql"`
 	Redis  RedisSetting  `mapstructure:"redis"`
+	JWT    JWTSetting    `mapstructure:"jwt"`
 }
 
 type ServerSetting struct {
@@ -38,4 +39,10 @@ type RedisSetting struct {
 	Port     int    `mapstructure:"port"`
 	Password string `mapstructure:"password"`
 	DB       int    `mapstructure:"db"`
+}
+
+type JWTSetting struct {
+	TokenHourLifespan int    `mapstructure:"tokenHourLifespan"`
+	JwtExpiration     string `mapstructure:"jwtExpiration"`
+	ApiSecret         string `mapstructure:"apiSecret"`
 }

@@ -23,3 +23,7 @@ redis:
   port: 6381            # 6381      - 6379
   password:
   db: 0
+jwt:
+  tokenHourLifespan: 1
+  jwtExpiration: 1h
+  apiSecret: "xxx.yyy.zzz"

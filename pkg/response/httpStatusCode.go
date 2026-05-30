@@ -7,6 +7,9 @@ const (
 	ErrInvalidOTP       = 30002 // otp is invalid
 	ErrSendEmailOTP     = 30003 // failed to send mail OTP
 
+	// Authentication
+	ErrCodeAuthFailed = 40005
+
 	// Register
 	ErrCodeUserHasExists = 50001 // user has already exists
 
@@ -26,4 +29,6 @@ var msg = map[int]string{
 
 	ErrCodeOtpNotExists:     "otp exists but not registered",
 	ErrCodeUserOtpNotExists: "user otp not exists",
+
+	ErrCodeAuthFailed: "authentication failed",
 }
