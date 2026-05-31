@@ -1,0 +1,70 @@
+package auth
+
+import (
+	"go-learning/global"
+	"time"
+
+	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
+)
+
+type PayloadClaims struct {
+	jwt.StandardClaims
+}
+
+func GenerateJWT(payload jwt.Claims) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
+	return token.SignedString([]byte(global.Config.JWT.ApiSecret))
+}
+
+func CreateToken(uuidToken string) (string, error) {
+	// 1. set time experirion
+	timeEx := global.Config.JWT.JwtExpiration
+	if timeEx == "" {
+		timeEx = "1h"
+	}
+	expiration, err := time.ParseDuration(timeEx)
+	if err != nil {
+		return "", err
+	}
+
+	now := time.Now()
+	expiresAt := now.Add(expiration)
+
+	return GenerateJWT(&PayloadClaims{
+		StandardClaims: jwt.StandardClaims{
+			Id:        uuid.New().String(),
+			Subject:   uuidToken,
+			ExpiresAt: expiresAt.Unix(),
+			IssuedAt:  now.Unix(),
+			Issuer:    "shopdevgo",
+		},
+	})
+}
+
+func ParseJwtTokenSubject(jwtToken string) (*jwt.StandardClaims, error) {
+	tokenClaims, err := jwt.ParseWithClaims(jwtToken, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(global.Config.JWT.ApiSecret), nil
+	})
+
+	if tokenClaims != nil {
+		if claims, ok := tokenClaims.Claims.(*jwt.StandardClaims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
+	}
+
+	return nil, err
+}
+
+func VerifyTokenSubject(jwtToken string) (*jwt.StandardClaims, error) {
+	claims, err := ParseJwtTokenSubject(jwtToken)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = claims.Valid(); err != nil {
+		return nil, err
+	}
+
+	return claims, nil
+}

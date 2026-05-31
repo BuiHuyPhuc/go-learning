@@ -21,3 +21,24 @@ type UpdatePasswordRegisterRequest struct {
 	Token    string `json:"token"`
 	Password string `json:"password"`
 }
+
+type LoginRequest struct {
+	UserAccount  string `json:"user_account"`
+	UserPassword string `json:"user_password"`
+}
+
+type LoginResponse struct {
+	Token   string `json:"token"`
+	Message string `json:"message"`
+}
+
+type SetupTwoFactorAuthRequest struct {
+	UserId            int    `json:"user_id"`
+	TwoFactorAuthType string `json:"two_factor_auth_type"`
+	TwoFactorEmail    string `json:"two_factor_email"`
+}
+
+type VerifyTwoFactorAuthRequest struct {
+	UserId        int    `json:"user_id"`
+	TwoFactorCode string `json:"two_factor_code"`
+}

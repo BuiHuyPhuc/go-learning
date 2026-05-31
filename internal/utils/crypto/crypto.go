@@ -34,3 +34,7 @@ func HashPassword(password string, salt string) string {
 
 	return hex.EncodeToString(hashPass[:])
 }
+
+func MatchPassword(hash string, password string, salt string) bool {
+	return HashPassword(password, salt) == hash
+}

@@ -1,5 +1,12 @@
 basePath: /api/v1
 definitions:
+  dto.LoginRequest:
+    properties:
+      user_account:
+        type: string
+      user_password:
+        type: string
+    type: object
   dto.RegisterRequest:
     properties:
       verify_key:
@@ -7,6 +14,15 @@ definitions:
       verify_purpose:
         type: string
       verify_type:
+        type: integer
+    type: object
+  dto.SetupTwoFactorAuthRequest:
+    properties:
+      two_factor_auth_type:
+        type: string
+      two_factor_email:
+        type: string
+      user_id:
         type: integer
     type: object
   dto.UpdatePasswordRegisterRequest:
@@ -22,6 +38,13 @@ definitions:
         type: string
       verify_key:
         type: string
+    type: object
+  dto.VerifyTwoFactorAuthRequest:
+    properties:
+      two_factor_code:
+        type: string
+      user_id:
+        type: integer
     type: object
   response.ErrorResponseData:
     properties:
@@ -53,6 +76,32 @@ info:
   title: API Documentation Ecommerce Backend SHOPDEVGO
   version: 1.0.0
 paths:
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: User Login
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponseData'
+      summary: User Login
+      tags:
+      - account management
   /users/register:
     post:
       consumes:
@@ -79,6 +128,68 @@ paths:
       summary: User Registration
       tags:
       - account management
+  /users/two-factor/setup:
+    post:
+      consumes:
+      - application/json
+      description: User Setup Two Factor Authentication
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SetupTwoFactorAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponseData'
+      summary: User Setup Two Factor Authentication
+      tags:
+      - account 2fa
+  /users/two-factor/verify:
+    post:
+      consumes:
+      - application/json
+      description: User Verify Two Factor Authentication
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.VerifyTwoFactorAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResponseData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponseData'
+      summary: User Verify Two Factor Authentication
+      tags:
+      - account 2fa
   /users/update-pass-register:
     post:
       consumes:

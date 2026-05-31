@@ -5,6 +5,7 @@ const (
 	MOBILE int = 2
 
 	TIME_OTP_REGISTER int = 1
+	TIME_TOKEN_CACHE  int = 1
 
 	HOST_EMAIL string = "buihuyphuc6101997@gmail.com"
 )

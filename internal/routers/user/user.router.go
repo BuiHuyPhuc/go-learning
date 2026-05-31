@@ -2,6 +2,7 @@ package user
 
 import (
 	"go-learning/internal/controller/account"
+	"go-learning/internal/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,8 +31,10 @@ func (urt *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 
 	// private router
 	userRouterPrivate := Router.Group("/users")
-	// userRouterPrivate.Use(LimiterMiddleware(), AuthMiddleware(), PermissionMiddleware())
+	userRouterPrivate.Use(middlewares.AuthMiddleware())
 	{
 		userRouterPrivate.GET("/get-info")
+		userRouterPrivate.POST("/two-factor/setup", account.TwoFA.SetupTwoFactorAuth)
+		userRouterPrivate.POST("/two-factor/verify", account.TwoFA.VerifyTwoFactorAuth)
 	}
 }
