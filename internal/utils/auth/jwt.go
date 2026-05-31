@@ -41,3 +41,30 @@ func CreateToken(uuidToken string) (string, error) {
 		},
 	})
 }
+
+func ParseJwtTokenSubject(jwtToken string) (*jwt.StandardClaims, error) {
+	tokenClaims, err := jwt.ParseWithClaims(jwtToken, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(global.Config.JWT.ApiSecret), nil
+	})
+
+	if tokenClaims != nil {
+		if claims, ok := tokenClaims.Claims.(*jwt.StandardClaims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
+	}
+
+	return nil, err
+}
+
+func VerifyTokenSubject(jwtToken string) (*jwt.StandardClaims, error) {
+	claims, err := ParseJwtTokenSubject(jwtToken)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = claims.Valid(); err != nil {
+		return nil, err
+	}
+
+	return claims, nil
+}

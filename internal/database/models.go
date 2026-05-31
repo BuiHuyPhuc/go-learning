@@ -38,15 +38,16 @@ type PreGoAccUser9999 struct {
 
 // pre_go_acc_user_base_9999
 type PreGoAccUserBase9999 struct {
-	UserID         int32
-	UserAccount    string
-	UserPassword   string
-	UserSalt       string
-	UserLoginTime  sql.NullTime
-	UserLogoutTime sql.NullTime
-	UserLoginIp    sql.NullString
-	UserCreatedAt  sql.NullTime
-	UserUpdatedAt  sql.NullTime
+	UserID             int32
+	UserAccount        string
+	UserPassword       string
+	UserSalt           string
+	UserLoginTime      sql.NullTime
+	UserLogoutTime     sql.NullTime
+	UserLoginIp        sql.NullString
+	UserCreatedAt      sql.NullTime
+	UserUpdatedAt      sql.NullTime
+	IsTwoFactorEnabled interface{}
 }
 
 // pre_go_acc_user_info_9999
@@ -65,6 +66,20 @@ type PreGoAccUserInfo9999 struct {
 	UserIsAuthentication uint8
 	CreatedAt            sql.NullTime
 	UpdatedAt            sql.NullTime
+}
+
+// pre_go_acc_user_two_factor_9999
+type PreGoAccUserTwoFactor9999 struct {
+	TwoFactorID int32
+	UserID      int32
+	// Auth type: 0-SMS, 1-Email, 2-App
+	TwoFactorAuthType   uint8
+	TwoFactorAuthSecret sql.NullString
+	TwoFactorPhone      sql.NullString
+	TwoFactorEmail      sql.NullString
+	TwoFactorIsActive   interface{}
+	TwoFactorCreatedAt  sql.NullTime
+	TwoFactorUpdatedAt  sql.NullTime
 }
 
 // pre_go_acc_user_verify_9999

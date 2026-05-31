@@ -19,6 +19,12 @@ type (
 
 	IUserLogin interface {
 		Login(ctx context.Context, in *dto.LoginRequest) (statusCode int, out dto.LoginResponse, err error)
+
+		// two-factor authentication
+		IsTwoFactorEnabled(ctx context.Context, userId int) (statusCode int, out bool, err error)
+		SetupTwoFactorAuth(ctx context.Context, in *dto.SetupTwoFactorAuthRequest) (statusCode int, err error)
+		VerifyTwoFactorAuth(ctx context.Context, in *dto.VerifyTwoFactorAuthRequest) (statusCode int, err error)
+
 		Register(ctx context.Context, in *dto.RegisterRequest) (statusCode int, err error)
 		VerifyOTP(ctx context.Context, in *dto.VerifyOTPRequest) (out dto.VerifyOTPResponse, err error)
 		UpdatePasswordRegister(ctx context.Context, token string, password string) (userId int, err error)
