@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"go-learning/global"
+	"go-learning/internal/middlewares"
 	"go-learning/internal/routers"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,29 @@ func InitRouter() *gin.Engine {
 	// r.Use() // logging middleware
 	// r.Use() // cross-domain middleware
 	// r.Use() // limiter middleware
+
+	// vegeta attack load testing tool
+	r.Use(middlewares.NewRateLimiter().GlobalRateLimiter())
+	r.GET("/ping/100", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "pong 100",
+		})
+	})
+
+	r.Use(middlewares.NewRateLimiter().PublicRateLimiter())
+	r.GET("/ping/80", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "pong 80",
+		})
+	})
+
+	r.Use(middlewares.NewRateLimiter().UserPrivateRateLimiter())
+	r.GET("/ping/50", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "pong 50",
+		})
+	})
+
 	// manageRouter := routers.RouterGroupApp.Manage
 	userRouter := routers.RouterGroupApp.User
 
