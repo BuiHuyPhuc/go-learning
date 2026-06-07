@@ -53,3 +53,7 @@ Thumbs.db
 # File build hệ thống dev
 docker-compose.yaml
 
+# Docker persistent data
+environment/data/
+environment/grafana-storage/
+

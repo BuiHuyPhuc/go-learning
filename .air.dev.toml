@@ -6,7 +6,7 @@ tmp_dir = "tmp"
   bin = "tmp/main"
   include_ext = ["go"]
   include_dir = ["cmd", "internal", "pkg"]
-  exclude_dir = ["tmp", "vendor", "node_modules"]
+  exclude_dir = ["tmp", "vendor", "node_modules", "environment", "data"]
   delay = 1000
 
 [color]

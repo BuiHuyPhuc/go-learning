@@ -61,6 +61,7 @@ func (rl *RateLimiter) GlobalRateLimiter() gin.HandlerFunc {
 		if limitContext.Reached {
 			log.Println("Rate limit breached GLOBAL")
 			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"error": "Rate limit breached GLOBAL, try later"})
+			return
 		}
 
 		c.Next()
@@ -85,6 +86,7 @@ func (rl *RateLimiter) PublicRateLimiter() gin.HandlerFunc {
 			if limitContext.Reached {
 				log.Println("Rate limit breached PUBLIC")
 				c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"error": "Rate limit breached PUBLIC, try later"})
+				return
 			}
 		}
 
@@ -110,6 +112,7 @@ func (rl *RateLimiter) UserPrivateRateLimiter() gin.HandlerFunc {
 			if limitContext.Reached {
 				log.Println("Rate limit breached USER PRIVATE")
 				c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"error": "Rate limit breached USER PRIVATE, try later"})
+				return
 			}
 		}
 
