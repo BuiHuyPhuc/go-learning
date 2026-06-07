@@ -1,0 +1,13 @@
+global:
+  scrabe_interval: 15s
+
+scrabe_config:
+  - job_name: 'shopdevgo-go-api'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8888']
+
+  - job_name: 'shopdevgo-prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:9090']
