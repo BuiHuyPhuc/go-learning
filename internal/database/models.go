@@ -6,6 +6,7 @@ package database
 
 import (
 	"database/sql"
+	"time"
 )
 
 // pre_go_acc_user_9999
@@ -121,4 +122,22 @@ type PreGoCrmUserC struct {
 	UsrLoginTimes int32
 	// Status 1:enable, 0:disable, -1:deleted
 	UsrStatus bool
+}
+
+// pre_go_ticket_item_9999
+type PreGoTicketItem9999 struct {
+	ID              int64
+	Name            string
+	Description     sql.NullString
+	StockInitial    int32
+	StockAvailable  int32
+	IsStockPrepared bool
+	PriceOriginal   int64
+	PriceFlash      int64
+	SaleStartTime   time.Time
+	SaleEndTime     time.Time
+	Status          int32
+	AcctivityID     int64
+	CreatedAt       sql.NullTime
+	UpdatedAt       sql.NullTime
 }

@@ -12,4 +12,6 @@ func InitServiceInterface() {
 
 	// User Service Interface
 	service.InitUserLogin(impl.NewUserLoginImpl(queries))
+	// Ticket Service Interface
+	service.InitTicketItem(impl.NewTicketItemImpl(queries))
 }
