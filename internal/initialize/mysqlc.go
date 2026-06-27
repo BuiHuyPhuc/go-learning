@@ -37,6 +37,11 @@ Họ không thể nâng cấp cuốn chiếu (rolling upgrade) kiểu "máy này
 tắt master -> chạy công cụ pg_upgrade -> bật lại master -> xóa sạch dữ liệu trên các replica và sao chép lại toàn bộ terabytes dữ liệu mới từ master qua mạng.
 
 
+MYSQL (ACID: Atomicity, Consistency, Isolation, Durability) 3 layer
+1. SQL layer: parser -> optimizer -> excecutor (câu lệnh SQL)
+2. Innob (Storage Engine): B-tree index, Lock, MVCC-Multi Version Concurrency Control, WAL-Write Ahead Log
+3. Disk/Memory
+
 POSTGRESQL 17+
 - Gộp chỉ mục trùng lặp (B-Tree deduplication) giúp giảm dung lượng index một cách đáng kể
 - Cơ chế dọn rác (autovacuum) và quản lý trang đĩa cũng thông minh hơn trước rất nhiều

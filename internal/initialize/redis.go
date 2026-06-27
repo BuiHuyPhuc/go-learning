@@ -50,6 +50,9 @@ func redisExample() {
 docker network inspect redis-master_default
 docker exec -it redis redis-cli
 keys *
+getrange, mset, mget, incr, incrby, decr, decrby, expire, ttl
+lpush, lrange, rpush, llen, lpop, rpop, lset, linsert, lindex, lpushx (nếu key không tồn tại thì k add vào), sort <key> asc|desc alpha
+sadd, smembers, scard, sismember, sdiff, sdiffstore, sinter, sinterstore, sunion, sunionstore
 INFO replication
 
 

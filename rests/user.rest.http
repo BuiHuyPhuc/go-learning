@@ -9,3 +9,6 @@ Content-Type: application/json
   "verify_type": 1,
   "verify_purpose": "TEST_USER"
 }
+
+### Ticket Retrieve
+GET {{baseUrl}}/tickets/detail/1
