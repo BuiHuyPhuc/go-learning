@@ -16,6 +16,7 @@ func Run() *gin.Engine {
 	// InitMysql()
 	InitMysqlC() // docker exec -it mysql bash
 	InitRedis()  // docker exec -it redis redis-cli
+	// InitRedisSentinel()
 	// InitKafka()
 
 	// InitCron()

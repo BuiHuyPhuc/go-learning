@@ -49,6 +49,19 @@ POSTGRESQL 17+
 Postgres giờ cũng có thể chỉ gửi đi các thay đổi logic siêu nhẹ giống như MySQL, giải quyết dứt điểm bài toán nghẽn mạng và lệch dữ liệu giữa các máy chủ
 - Nhờ Logical Replication, việc nâng cấp giữa các phiên bản Postgres lớn hiện nay đã có thể thực hiện theo kiểu cuốn chiếu (rolling upgrade).
 Bạn có thể dựng một máy replica chạy bản mới, đồng bộ logic từ máy master bản cũ, sau đó chuyển vùng (failover) một cách êm ái với thời gian dừng hệ thống gần như bằng không.
+
+
+PARTITION: phân vùng dữ liệu trong 1 database
+SHARDING: phân mảnh/phân tán dữ liệu trên nhiều database
+REPLICATION: sao lưu dữ liệu master-slave database
+
+N + 1 problem
+- Sử dụng join có nhược điểm nhiều thông tin trùng lặp
+- Sử dụng DataLoader được phát triển bởi Facebook
+select * from users; -- 1, 2, 3
+select * from posts where user_id in (1, 2, 3);
+Kết hợp với cơ chế CACHE PER REQUEST để tránh query lại nhiều lần trong vòng đời của 1 request
+Trước khi query sẽ đọc từ cache, nếu chưa có thì sẽ query và mapping dữ liệu vào cache
 */
 
 func InitMysqlC() {
