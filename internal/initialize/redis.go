@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"go-learning/global"
+	"log"
 
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -46,6 +47,37 @@ func redisExample() {
 	global.Logger.Info("Value score is::", zap.String("score", val))
 }
 
+func InitRedisSentinel() {
+	rdb := redis.NewFailoverClient(&redis.FailoverOptions{
+		MasterName:    "redis-master",
+		SentinelAddrs: []string{"127.0.0.1:26379", "127.0.0.1:26380", "127.0.0.1:26381"},
+		// App trong container
+		// SentinelAddrs: []string{"redis-sentinel-1:26379", "redis-sentinel-2:26380", "redis-sentinel-3:26381"},
+		DB:       0,
+		Password: "123456",
+	})
+
+	// Check the connection
+	_, err := rdb.Ping(ctx).Result()
+	if err != nil {
+		log.Fatalf("Failed to connect to Redis Sentinel: %v", err)
+	}
+	fmt.Println("Connected to Redis Sentinel successfully")
+
+	// Try setting and getting a value
+	err = rdb.Set(ctx, "test_key", "Hello Redis Sentinel!", 0).Err()
+	if err != nil {
+		log.Fatalf("Error setting key: %v", err)
+	}
+
+	val, err := rdb.Get(ctx, "test_key").Result()
+	if err != nil {
+		log.Fatalf("Error getting key: %v", err)
+	}
+
+	fmt.Println("Value of test_key:", val)
+}
+
 /*
 docker network inspect redis-master_default
 docker exec -it redis redis-cli
@@ -54,6 +86,10 @@ getrange, mset, mget, incr, incrby, decr, decrby, expire, ttl
 lpush, lrange, rpush, llen, lpop, rpop, lset, linsert, lindex, lpushx (nếu key không tồn tại thì k add vào), sort <key> asc|desc alpha
 sadd, smembers, scard, sismember, sdiff, sdiffstore, sinter, sinterstore, sunion, sunionstore
 INFO replication
+
+
+docker exec -it redis-sentinel-1 redis-cli -p 26379
+SENTINEL get-master-addr-by-name redis-master
 
 
 1. Redis transaction: Sử dụng từ khóa multi để bắt đầu trans và kết thúc exec

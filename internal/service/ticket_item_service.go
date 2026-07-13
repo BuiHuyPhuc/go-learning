@@ -9,7 +9,7 @@ type (
 	ITicketHome interface {
 	}
 	ITicketItem interface {
-		GetTicketItemById(ctx context.Context, ticketId int) (out *dto.TicketItemResponse, err error)
+		GetTicketItemById(ctx context.Context, ticketId int) (out dto.TicketItemResponse, err error)
 	}
 )
 
