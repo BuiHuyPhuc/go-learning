@@ -13,5 +13,6 @@ func (tr *TicketRouter) InitTicketRouter(Router *gin.RouterGroup) {
 	ticketRouterPublic := Router.Group("/tickets")
 	{
 		ticketRouterPublic.GET("/detail/:id", ticket.TicketItem.GetTicketItemById)
+		ticketRouterPublic.POST("/order", ticket.TicketItem.PlaceOrderByUser)
 	}
 }

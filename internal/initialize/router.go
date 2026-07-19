@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"go-learning/global"
+	"go-learning/internal/middlewares"
 	"go-learning/internal/routers"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,7 @@ func InitRouter() *gin.Engine {
 	// r.Use() // logging middleware
 	// r.Use() // cross-domain middleware
 	// r.Use() // limiter middleware
+	r.Use(middlewares.ValidationMiddleware()) // validation middleware
 
 	// vegeta attack load testing tool
 	// r.Use(middlewares.NewRateLimiter().GlobalRateLimiter())
